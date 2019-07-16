@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <!-- Import Spectre css to build UI -->
+      <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+      <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+      <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+      <!-- CSS Master file -->
+    <link rel="stylesheet" type="text/css" href="main.css">
+  </head>
+  <body>
+    <div id="main">
+        <!-- Accordion Item #1 -->
+        <div class="accordion">
+          <input type="checkbox" id="accordion-1" name="accordion-checkbox" hidden>
+          <label class="accordion-header" for="accordion-1" id="displayUrlButton">
+            <i class="icon icon-arrow-right mr-1"></i>
+              Current URLs
+          </label>
+          <div class="accordion-body" id="displayUrl">
+            <!-- Content will be programmatically injected with javascript -->
+          </div>
+        </div>
+        <!-- Accordion Item #2 -->
+        <div class="accordion">
+            <input type="checkbox" id="accordion-2" name="accordion-checkbox" hidden>
+            <label class="accordion-header" for="accordion-2" id="displayLinks">
+              <i class="icon icon-arrow-right mr-1"></i>
+                  Current Links
+            </label>
+            <div class="accordion-body" id="displayLink">
+            <!-- Content will be programmatically injected with javascript -->
+            </div>
+        </div>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>
