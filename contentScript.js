@@ -16,8 +16,9 @@ for(let i = 0; i < links.length; i++) {
     pageInfo.links["link" + i] = {};
 
     //Add properties to new object and store data
-    pageInfo.links["link" + i].target = links[i].baseURI;
+    pageInfo.links["link" + i].target = links[i].href;
     pageInfo.links["link" + i].relationship = links[i].rel;
+    pageInfo.links["link" + i].html = links[i].outerHTML;
 }
 
 //Send a message containing the pageInfo properties 

@@ -1,3 +1,9 @@
+//Notes
+//Next steps
+//Write code to display links in popup ui
+//maybe do a draft of what each list item should look like
+//Notes End
+
 console.log("This is popup.js talking...");
 
 //Popup functions
@@ -8,22 +14,32 @@ let  popupFunction = {
             //Execute a script on the active tab
             chrome.tabs.executeScript(tabs[0].id, {file: 'contentScript.js'});
           });
-        },
-        writeResourcehint: (rscHint) => {
+    },
+    logResourceHints: () => {//Convert links object into array
+        //Convert pageInfo.links into an array
+        let arr = Object.entries(pageInfo.links);
+        //push array values into global object
+        for (var i = 0; i < arr.length; i++) {
+            pageInfo.resourceHints.push(arr[i][1]);
+        } 
+    },
+    writeResourcehint: (rscHint) => {
             //create a link element
             let displayLink = document.createElement('a');
             //set innerhtml of link to that of preloaded resource
             //set attribute src of link to url of resource element.setAttribute('attribute', value)
             //add link to DOM
-        }
+    }
 }
 
 
 //Variable to store recieved messages
-let  pageInfo = {
+let pageInfo = {
     currentPageURL: '',
     links: {},
+    resourceHints: []
 }
+
 
 
 //Variable to store popup UI components
@@ -85,6 +101,3 @@ ui.displayLinksButton.addEventListener('click', () => {
 })
 
 
-const arrayOfObj = Object.entries(pageInfo.links).map((e) => ({
-    [e[0]]: e[1]
-}));
