@@ -196,3 +196,35 @@ for (var i = 0; i < links.length; i++) {
 //   });
 // }
 
+
+
+for (var i = 0; i < pageInfo.resourceHints.length; i++) {
+    
+}
+
+"https://adservice.google.com/adsid/integrator.js?domain=stackoverflow.com"
+
+//clear #displayLink div
+ui.displayLinks = '';
+//If we have links inside the pageInfo.links object
+if(pageInfo.links) {
+//Convert object to array
+let links = Object.keys(pageInfo.links);
+//Create another array to store complete linkinfo
+let linksArray = []
+//loop through initial array and deposit objects into complete linkinfo array
+for (let i = 0; i < links.length; i++) {
+    linksArray.push(pageInfo.links[links[i]]);
+}
+//loop through linksArray and add write links to DOM
+for (let i = 0; i < linksArray.length; i++) {
+    //write switch statement to evaluate for resource hints
+    //for each resource hint create a link element (writeResourcehint())
+}
+}
+
+//create a link element
+let displayLink = document.createElement('a');
+//set innerhtml of link to that of preloaded resource
+//set attribute src of link to url of resource element.setAttribute('attribute', value)
+//add link to DOM
