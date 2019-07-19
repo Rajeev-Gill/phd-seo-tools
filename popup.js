@@ -1,7 +1,7 @@
 //Notes
 //Next steps
-//Write code to display links in popup ui
-//maybe do a draft of what each list item should look like
+//diagnose buggy writeresourcehints
+//implement fix
 //Notes End
 
 console.log("This is popup.js talking...");
@@ -29,7 +29,7 @@ let  popupFunction = {
     },
     writeResourcehints: () => {
         //clear rsc hint div
-        //ui.displayLinks.innerHTML = '';
+        ui.resourceHints.innerHTML = '';
         //create and store ul element
         let list = document.createElement("ul");
         //set attribute of ul element to rscHintList
