@@ -228,3 +228,48 @@ let displayLink = document.createElement('a');
 //set innerhtml of link to that of preloaded resource
 //set attribute src of link to url of resource element.setAttribute('attribute', value)
 //add link to DOM
+
+switch (pageInfo.linksArray[i].relationship) {
+    case "preload":
+        //create and store li
+        let li = document.createElement("li");
+        //set li innerhtml to relationship + ":" + target
+        li.innerHTML = pageInfo.linksArray[i].relationship + ":" + pageInfo.linksArray[i].target;
+        //append li to rscHintlist
+        list.appendChild(li);
+        break;
+    case "prefetch":
+         //create and store li
+         let li = document.createElement("li");
+         //set li innerhtml to relationship + ":" + target
+         li.innerHTML = pageInfo.linksArray[i].relationship + ":" + pageInfo.linksArray[i].target;
+         //append li to rscHintlist
+         list.appendChild(li);
+         break;
+    case "prerender":
+        //create and store li
+        let li = document.createElement("li");
+        //set li innerhtml to relationship + ":" + target
+        li.innerHTML = pageInfo.linksArray[i].relationship + ":" + pageInfo.linksArray[i].target;
+        //append li to rscHintlist
+        list.appendChild(li);
+        break;
+    case "preconnect":
+        //create and store li
+        let li = document.createElement("li");
+        //set li innerhtml to relationship + ":" + target
+        li.innerHTML = pageInfo.linksArray[i].relationship + ":" + pageInfo.linksArray[i].target;
+        //append li to rscHintlist
+        list.appendChild(li);
+        break;
+    case "dns-prefetch":
+        //create and store li
+        let li = document.createElement("li");
+        //set li innerhtml to relationship + ":" + target
+        li.innerHTML = pageInfo.linksArray[i].relationship + ":" + pageInfo.linksArray[i].target;
+        //append li to rscHintlist
+        list.appendChild(li);
+        break;
+    default:
+        break;
+}

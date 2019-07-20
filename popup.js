@@ -1,7 +1,7 @@
 //Notes
 //Next steps
-//diagnose buggy writeresourcehintss
-//implement fix
+//Merge to master
+//Clean up and refactor code
 //Notes End
 
 console.log("This is popup.js talking...");
@@ -27,6 +27,9 @@ let  popupFunction = {
             pageInfo.linksArray.push(arr[i][1]);
         } 
     },
+    writeListItem: () => {
+
+    },
     writeResourcehints: () => {
         //clear rsc hint div
         ui.resourceHints.innerHTML = '';
@@ -37,14 +40,42 @@ let  popupFunction = {
         //loop through pageInfo.links array
         for (let i = 0; i < pageInfo.linksArray.length; i++) {
             //if iterated item .relationship == preload,prefetch,prerender,preconnect,DNS-Prefetch
-            if((pageInfo.linksArray[i].relationship) == "preload" || "prefetch" || "prerender" || "preconnect" || "dns-prefetch"){
+            if(pageInfo.linksArray[i].relationship == "preload"){
+                //create and store li
+               let li = document.createElement("li");
+                //set li innerhtml to relationship + ":" + target
+                li.innerHTML = pageInfo.linksArray[i].relationship + ":" + pageInfo.linksArray[i].target;
+                //append li to rscHintlist
+                list.appendChild(li);
+            } else if (pageInfo.linksArray[i].relationship == "prerender") {
                 //create and store li
                 let li = document.createElement("li");
                 //set li innerhtml to relationship + ":" + target
                 li.innerHTML = pageInfo.linksArray[i].relationship + ":" + pageInfo.linksArray[i].target;
                 //append li to rscHintlist
                 list.appendChild(li);
-            };
+            } else if (pageInfo.linksArray[i].relationship == "prefetch") {
+                //create and store li
+                let li = document.createElement("li");
+                //set li innerhtml to relationship + ":" + target
+                li.innerHTML = pageInfo.linksArray[i].relationship + ":" + pageInfo.linksArray[i].target;
+                //append li to rscHintlist
+                list.appendChild(li);
+            } else if (pageInfo.linksArray[i].relationship == "preconnect") {
+                //create and store li
+                let li = document.createElement("li");
+                //set li innerhtml to relationship + ":" + target
+                li.innerHTML = pageInfo.linksArray[i].relationship + ":" + pageInfo.linksArray[i].target;
+                //append li to rscHintlist
+                list.appendChild(li);
+            } else if (pageInfo.linksArray[i].relationship == "dns-prefetch") {
+                //create and store li
+                let li = document.createElement("li");
+                //set li innerhtml to relationship + ":" + target
+                li.innerHTML = pageInfo.linksArray[i].relationship + ":" + pageInfo.linksArray[i].target;
+                //append li to rscHintlist
+                list.appendChild(li);
+            }
         }
         //add list to DOM
         ui.resourceHints.appendChild(list);
