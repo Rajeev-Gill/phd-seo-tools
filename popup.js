@@ -11,22 +11,19 @@ console.log("This is popup.js talking...");
 //logResourceHints
 //writeResourceHint
 //displayCurrentURL
-let  popupFunction = {
+let popupFunction = {
     sendMessage: () => {
         //Query tabs for the active tab in the current window
-        chrome.tabs.query({active: true, currentWindow: true}, tabs => {
+        chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
             //Execute a script on the active tab
-            chrome.tabs.executeScript(tabs[0].id, {file: 'contentScript.js'});
-          });
+            chrome.tabs.executeScript(tabs[0].id, { file: 'contentScript.js' });
+        });
     },
     logLinks: () => {
         //Extract Link info and push into array
-        for (let key in pageInfo.links){
+        for (let key in pageInfo.links) {
             pageInfo.linksArray.push(pageInfo.links[key]);
         }
-    },
-    writeListItem: () => {
-
     },
     writeResourcehints: () => {
         //clear rsc hint div
@@ -38,9 +35,9 @@ let  popupFunction = {
         //loop through pageInfo.links array
         for (let i = 0; i < pageInfo.linksArray.length; i++) {
             //if iterated item .relationship == preload,prefetch,prerender,preconnect,DNS-Prefetch
-            if(pageInfo.linksArray[i].relationship == "preload"){
+            if (pageInfo.linksArray[i].relationship == "preload") {
                 //create and store li
-               let li = document.createElement("li");
+                let li = document.createElement("li");
                 //set li innerhtml to relationship + ":" + target
                 li.innerHTML = pageInfo.linksArray[i].relationship + ":" + pageInfo.linksArray[i].target;
                 //append li to rscHintlist
@@ -95,7 +92,6 @@ let  popupFunction = {
     }
 }
 
-
 //Variable to store recieved messages
 let pageInfo = {
     currentPageURL: '',
@@ -103,16 +99,16 @@ let pageInfo = {
     linksArray: []
 }
 
-
+popupFunction.sendMessage();
 
 //Variable to store popup UI components
-let  ui = {
+let ui = {
     popup: document.getElementById("main"),
     displayUrlButton: document.getElementById("displayUrlButton"),
     displayUrl: document.getElementById("displayUrl"),
     displayLinksButton: document.getElementById("displayLinks"),
     displayLinks: document.getElementById("displayLink"),
-    resourceHints: document.getElementById("resourceHints")
+    resourceHints: document.getElementById("resourceHints"),
 }
 
 //Listen for messages from contentScript using the following notation:
@@ -123,13 +119,15 @@ chrome.runtime.onMessage.addListener(
         console.log(request)
         pageInfo.currentPageURL = request.url;
         pageInfo.links = request.links;
-        sendResponse({message: "info recieved by popup"});
+        //Convert links from obj to arr
+        popupFunction.logLinks();
+        sendResponse({ message: "info recieved by popup" });
     }
 );
 
 //Display current page URL
 ui.displayUrlButton.addEventListener('click', () => {
- popupFunction.displayCurrentURL();
+    popupFunction.displayCurrentURL();
 })
 
 //Display links on page

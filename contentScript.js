@@ -1,7 +1,10 @@
 console.log("Programmatically injected contentScript");
 
+//Clear pageInfo obj
+let pageInfo ='';
+
 //Store page information in an object
-let pageInfo = {
+pageInfo = {
     currentPageURL: window.location.href,
     links: {} //Pass objects into here
 }
