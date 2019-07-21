@@ -19,13 +19,11 @@ let  popupFunction = {
             chrome.tabs.executeScript(tabs[0].id, {file: 'contentScript.js'});
           });
     },
-    logLinks: () => {//Convert links object into array
-        //Convert pageInfo.links into an array
-        let arr = Object.entries(pageInfo.links);
-        //push array values into global object
-        for (var i = 0; i < arr.length; i++) {
-            pageInfo.linksArray.push(arr[i][1]);
-        } 
+    logLinks: () => {
+        //Extract Link info and push into array
+        for (let key in pageInfo.links){
+            pageInfo.linksArray.push(pageInfo.links[key]);
+        }
     },
     writeListItem: () => {
 
