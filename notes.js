@@ -273,3 +273,18 @@ switch (pageInfo.linksArray[i].relationship) {
     default:
         break;
 }
+
+const cdnLinkExamples = [
+    "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css",
+    "https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.4.3/mobile-detect.min.js"
+]
+
+const nextGenImageFormats = [
+    "WEBP",
+    "JPEG-XR",
+    "JPEG-2000"
+]
+
+const usefulLinks = [
+    "https://developers.google.com/web/fundamentals/performance/resource-prioritization",
+]
