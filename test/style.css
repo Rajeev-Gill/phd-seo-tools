@@ -18,3 +18,7 @@
 ul {
     list-style-type: none;
 }
+
+.tile-content small {
+    display: block;
+}
