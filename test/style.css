@@ -1,7 +1,6 @@
 .popup {
     max-width: 630px;
     height: 300px;
-    border: 1px solid red;
 }
 
 .tab-item a {
@@ -14,4 +13,8 @@
 
 .visible {
     display: block;
+}
+
+ul {
+    list-style-type: none;
 }
