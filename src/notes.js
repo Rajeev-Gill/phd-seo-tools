@@ -55,7 +55,7 @@ if(pageInfo){
 //   });
 // }
 
-"content_scripts": [
+"content_scripts"; [
     {
         "matches": ["http://*/*", "https://*/*"],
         "js": ["contentScript.js"]

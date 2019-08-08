@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container popup">
+        <div class="columns">
+            <div class="column col-12">
+                <div class="panel">
+                    <div class="panel-nav">
+                        <ul class="tab tab-block" id="nav">
+                            <li class="tab-item resources active">
+                                <a href="#">Resource Prioritisation</a>
+                            </li>
+                            <li class="tab-item cdn">
+                                <a href="#">CDN</a>
+                            </li>
+                            <li class="tab-item images">
+                                <a href="#">Images</a>
+                            </li>
+                            <li class="tab-item pagespeed">
+                                <a href="#">Pagespeed</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+                        <div id="resource-content" class="visible">resource-content</div>
+                        <div id="cdn-content" class="hidden">cdn-content</div>
+                        <div id="images-content" class="hidden">images-content</div>
+                        <div id="pagespeed-content" class="hidden">pagespeed-content</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+
+</html>
