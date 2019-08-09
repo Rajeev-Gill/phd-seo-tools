@@ -1,5 +1,24 @@
 #main {
-    min-height: 130px;
-    min-width: 130px;
-    border: 2px solid red;
-  }
+  width: 630px;
+  height: 300px;
+}
+
+.tab-item a {
+  height: 65px;
+}
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.tile-content small {
+  display: block;
+}

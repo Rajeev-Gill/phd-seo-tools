@@ -12,28 +12,138 @@
 
 <body>
   <div id="main">
-    <!-- Accordion Item #1 -->
-    <div class="accordion">
-      <input type="checkbox" id="accordion-1" name="accordion-checkbox" hidden>
-      <label class="accordion-header" for="accordion-1" id="displayUrlButton">
-        <i class="icon icon-arrow-right mr-1"></i>
-        Current URL
-      </label>
-      <div class="accordion-body" id="displayUrl">
-        <!-- Content will be programmatically injected with javascript -->
-      </div>
-    </div>
-    <!-- Accordion Item #2 -->
-    <div class="accordion">
-      <input type="checkbox" id="accordion-2" name="accordion-checkbox" hidden>
-      <label class="accordion-header" for="accordion-2" id="displayLinks">
-        <i class="icon icon-arrow-right mr-1"></i>
-        Resource Hints
-      </label>
-      <div class="accordion-body" id="displayLink">
-        <!-- Content will be programmatically injected with javascript -->
-        <div id="resourceHints">
-          </ul>
+    <div class="columns">
+      <div class="column col-12">
+        <div class="panel">
+          <div class="panel-nav">
+            <ul class="tab tab-block" id="nav">
+              <li class="tab-item resources active">
+                <a href="#">Resource Prioritisation</a>
+              </li>
+              <li class="tab-item cdn">
+                <a href="#">CDN</a>
+              </li>
+              <li class="tab-item images">
+                <a href="#">Images</a>
+              </li>
+              <li class="tab-item pagespeed">
+                <a href="#">Pagespeed</a>
+              </li>
+            </ul>
+          </div>
+          <div class="panel-body">
+            <div id="resource-content" class="visible">
+              <div class="accordion">
+                <input type="checkbox" id="accordion-1" name="accordion-checkbox" hidden>
+                <label class="accordion-header" for="accordion-1" id="displayLinks">
+                  <i class="icon icon-arrow-right mr-1"></i>
+                  Show optimised resources
+                </label>
+                <div class="accordion-body" id="displayLink">
+                  <!-- Content will be programmatically injected with javascript -->
+                  <div id="resourceHints">
+                  </div>
+                </div>
+              </div>
+              <div class="accordion">
+                <input type="checkbox" id="accordion-5" name="accordion-checkbox" hidden>
+                <label class="accordion-header" for="accordion-5">
+                  <i class="icon icon-arrow-right mr-5"></i>
+                  Show non-optimised resources
+                </label>
+                <div class="accordion-body">
+                  <ul>
+                    <li><span class="label label-rounded">preconnect</span class="label label-rounded">
+                      https://googletags.com</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div id="cdn-content" class="hidden">
+              <div class="accordion">
+                <input type="checkbox" id="accordion-2" name="accordion-checkbox" hidden>
+                <label class="accordion-header" for="accordion-2">
+                  <i class="icon icon-arrow-right mr-2"></i>
+                  Show CDN loaded resources
+                </label>
+                <div class="accordion-body">
+                  <ul>
+                    <li><span class="label label-rounded">preconnect</span class="label label-rounded">
+                      https://googletags.com</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="accordion">
+                <input type="checkbox" id="accordion-6" name="accordion-checkbox" hidden>
+                <label class="accordion-header" for="accordion-6">
+                  <i class="icon icon-arrow-right mr-6"></i>
+                  Show non-CDN loaded resources
+                </label>
+                <div class="accordion-body">
+                  <ul>
+                    <li><span class="label label-rounded">preconnect</span class="label label-rounded">
+                      https://googletags.com</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div id="images-content" class="hidden">
+              <div class="accordion">
+                <input type="checkbox" id="accordion-3" name="accordion-checkbox" hidden>
+                <label class="accordion-header" for="accordion-3">
+                  <i class="icon icon-arrow-right mr-3"></i>
+                  Show next-generation images
+                </label>
+                <div class="accordion-body">
+                  <div class="tile tile-centered">
+                    <div class="tile-icon">
+                      <div class="example-tile-icon">
+                        <img src="https://via.placeholder.com/140x100">
+                      </div>
+                    </div>
+                    <div class="tile-content">
+                      <div class="tile-title">Golf.WEBP</div>
+                      <small class="tile-subtitle">Size: 14MB</small>
+                      <small class="tile-subtitle">Source: /img/Golf.WEBP</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion">
+                <input type="checkbox" id="accordion-7" name="accordion-checkbox" hidden>
+                <label class="accordion-header" for="accordion-7">
+                  <i class="icon icon-arrow-right mr-7"></i>
+                  Show standard images
+                </label>
+                <div class="accordion-body">
+                  <div class="tile tile-centered">
+                    <div class="tile-icon">
+                      <div class="example-tile-icon">
+                        <img src="https://via.placeholder.com/140x100">
+                      </div>
+                    </div>
+                    <div class="tile-content">
+                      <div class="tile-title">Polo.gif</div>
+                      <small class="tile-subtitle">Size: 14MB</small>
+                      <small class="tile-subtitle">Source: /img/Polo.gif</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="pagespeed-content" class="hidden">
+              <div class="accordion">
+                <input type="checkbox" id="accordion-4" name="accordion-checkbox" hidden>
+                <label class="accordion-header" for="accordion-4">
+                  <i class="icon icon-arrow-right mr-4"></i>
+                  Show PageSpeed insights
+                </label>
+                <div class="accordion-body">
+                  Coming Soon
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -6,12 +6,48 @@
 
 console.log("This is popup.js talking...");
 
-//Popup functions
-//sendMessage
-//logResourceHints
-//writeResourceHint
-//displayCurrentURL
 let popupFunction = {
+    hidePanels: (currentPanel) => {
+        ui.panels.forEach((panel) => {
+            if (panel.id != currentPanel) {
+                panel.className = "hidden";
+            }
+        });
+    },
+    tabClick: (e) => {
+        //remove existing active classes
+        let activeTabs = document.querySelectorAll(".active");
+        activeTabs.forEach((tab) => {
+            tab.className = tab.className.replace("active", "");
+        });
+        console.log(e.target.innerText);
+
+        //Add active class to element clicked
+        e.target.className += "active";
+
+        //remove existing active classes
+        var activePanels = document.querySelectorAll(".visible");
+
+        switch (e.target.innerText) {
+            case "Resource Prioritisation":
+                popupFunction.hidePanels("resource-content");
+                ui.panels[0].className = "visible";
+                break;
+            case "CDN":
+                popupFunction.hidePanels("cdn-content");
+                ui.panels[1].className = "visible";
+                break;
+            case "Images":
+                popupFunction.hidePanels("images-content");
+                ui.panels[2].className = "visible";
+                break;
+            case "Pagespeed":
+                popupFunction.hidePanels("pagespeed-content");
+                ui.panels[3].className = "visible";
+                break;
+        }
+
+    },
     sendMessage: () => {
         //Query tabs for the active tab in the current window
         chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
@@ -104,11 +140,18 @@ popupFunction.sendMessage();
 //Variable to store popup UI components
 let ui = {
     popup: document.getElementById("main"),
-    displayUrlButton: document.getElementById("displayUrlButton"),
-    displayUrl: document.getElementById("displayUrl"),
+    //displayUrlButton: document.getElementById("displayUrlButton"),
+    //displayUrl: document.getElementById("displayUrl"),
     displayLinksButton: document.getElementById("displayLinks"),
     displayLinks: document.getElementById("displayLink"),
     resourceHints: document.getElementById("resourceHints"),
+    nav: document.getElementById("nav"),
+    panels: [
+        document.getElementById("resource-content"),
+        document.getElementById("cdn-content"),
+        document.getElementById("images-content"),
+        document.getElementById("pagespeed-content")
+    ]
 }
 
 //Listen for messages from contentScript using the following notation:
@@ -126,13 +169,15 @@ chrome.runtime.onMessage.addListener(
 );
 
 //Display current page URL
-ui.displayUrlButton.addEventListener('click', () => {
-    popupFunction.displayCurrentURL();
-})
+// ui.displayUrlButton.addEventListener('click', () => {
+//     popupFunction.displayCurrentURL();
+// })
 
 //Display links on page
 ui.displayLinksButton.addEventListener('click', () => {
     popupFunction.writeResourcehints();
 })
 
-
+ui.nav.childNodes.forEach((e) => {
+    e.addEventListener("click", popupFunction.tabClick);
+})
