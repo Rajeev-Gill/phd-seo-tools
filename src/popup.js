@@ -50,9 +50,14 @@ let popupFunction = {
     },
     sendMessage: () => {
         //Query tabs for the active tab in the current window
-        chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+        chrome.tabs.query({
+            active: true,
+            currentWindow: true
+        }, tabs => {
             //Execute a script on the active tab
-            chrome.tabs.executeScript(tabs[0].id, { file: 'contentScript.js' });
+            chrome.tabs.executeScript(tabs[0].id, {
+                file: 'contentScript.js'
+            });
         });
     },
     logLinks: () => {
@@ -61,9 +66,30 @@ let popupFunction = {
             pageInfo.linksArray.push(pageInfo.links[key]);
         }
     },
-    writeResourcehints: () => {
+    writeNonOptimised: () => {
+        ui.displayNonOptimised.innerHTML = "";
+
+        let list = document.createElement("ul");
+        list.setAttribute("id", "nonOptimisedList");
+
+        console.log(pageInfo.linksArray);
+        pageInfo.linksArray.forEach((link) => {
+            if(link.relationship != "preload" && link.relationship != "prerender" && link.relationship != "prefetch" && link.relationship != "preconnect" && link.relationship != "dns-prefetch"){
+                //create and store li
+                let li = document.createElement("li");
+                //set li innerhtml to relationship + ":" + target
+                li.innerHTML = `<span class="label label-rounded">${link.relationship}</span>${link.target}`;
+                //append li to rscHintlist
+                list.appendChild(li);
+            }
+        });
+
+        //add list to DOM
+        ui.displayNonOptimised.appendChild(list);
+    },
+    writeOptimised: () => {
         //clear rsc hint div
-        ui.resourceHints.innerHTML = '';
+        ui.resourceHints.innerHTML = "";
         //create and store ul element
         let list = document.createElement("ul");
         //set attribute of ul element to rscHintList
@@ -75,35 +101,35 @@ let popupFunction = {
                 //create and store li
                 let li = document.createElement("li");
                 //set li innerhtml to relationship + ":" + target
-                li.innerHTML = pageInfo.linksArray[i].relationship + ":" + pageInfo.linksArray[i].target;
+                li.innerHTML = `<span class="label label-rounded">${pageInfo.linksArray[i].relationship}</span>${pageInfo.linksArray[i].target}`;
                 //append li to rscHintlist
                 list.appendChild(li);
             } else if (pageInfo.linksArray[i].relationship == "prerender") {
                 //create and store li
                 let li = document.createElement("li");
                 //set li innerhtml to relationship + ":" + target
-                li.innerHTML = pageInfo.linksArray[i].relationship + ":" + pageInfo.linksArray[i].target;
+                 li.innerHTML = `<span class="label label-rounded">${pageInfo.linksArray[i].relationship}</span>${pageInfo.linksArray[i].target}`;
                 //append li to rscHintlist
                 list.appendChild(li);
             } else if (pageInfo.linksArray[i].relationship == "prefetch") {
                 //create and store li
                 let li = document.createElement("li");
                 //set li innerhtml to relationship + ":" + target
-                li.innerHTML = pageInfo.linksArray[i].relationship + ":" + pageInfo.linksArray[i].target;
+                 li.innerHTML = `<span class="label label-rounded">${pageInfo.linksArray[i].relationship}</span>${pageInfo.linksArray[i].target}`;
                 //append li to rscHintlist
                 list.appendChild(li);
             } else if (pageInfo.linksArray[i].relationship == "preconnect") {
                 //create and store li
                 let li = document.createElement("li");
                 //set li innerhtml to relationship + ":" + target
-                li.innerHTML = pageInfo.linksArray[i].relationship + ":" + pageInfo.linksArray[i].target;
+                 li.innerHTML = `<span class="label label-rounded">${pageInfo.linksArray[i].relationship}</span>${pageInfo.linksArray[i].target}`;
                 //append li to rscHintlist
                 list.appendChild(li);
             } else if (pageInfo.linksArray[i].relationship == "dns-prefetch") {
                 //create and store li
                 let li = document.createElement("li");
                 //set li innerhtml to relationship + ":" + target
-                li.innerHTML = pageInfo.linksArray[i].relationship + ":" + pageInfo.linksArray[i].target;
+                 li.innerHTML = `<span class="label label-rounded">${pageInfo.linksArray[i].relationship}</span>${pageInfo.linksArray[i].target}`;
                 //append li to rscHintlist
                 list.appendChild(li);
             }
@@ -113,7 +139,7 @@ let popupFunction = {
     },
     displayCurrentURL: () => {
         //clear displayUrl div
-        ui.displayUrl.innerHTML = '';
+        ui.displayUrl.innerHTML = "";
         //If there is a current URL
         if (pageInfo.currentPageURL) {
             //create a h2 element
@@ -130,7 +156,7 @@ let popupFunction = {
 
 //Variable to store recieved messages
 let pageInfo = {
-    currentPageURL: '',
+    currentPageURL: "",
     links: {},
     linksArray: []
 }
@@ -140,10 +166,10 @@ popupFunction.sendMessage();
 //Variable to store popup UI components
 let ui = {
     popup: document.getElementById("main"),
-    //displayUrlButton: document.getElementById("displayUrlButton"),
-    //displayUrl: document.getElementById("displayUrl"),
-    displayLinksButton: document.getElementById("displayLinks"),
-    displayLinks: document.getElementById("displayLink"),
+    displayOptimisedButton: document.getElementById("displayOptimisedButton"),
+    displayOptimised: document.getElementById("displayOptimised"),
+    displayNonOptimisedButton: document.getElementById("displayNonOptimisedButton"),
+    displayNonOptimised: document.getElementById("displayNonOptimised"),
     resourceHints: document.getElementById("resourceHints"),
     nav: document.getElementById("nav"),
     panels: [
@@ -164,20 +190,28 @@ chrome.runtime.onMessage.addListener(
         pageInfo.links = request.links;
         //Convert links from obj to arr
         popupFunction.logLinks();
-        sendResponse({ message: "info recieved by popup" });
+        sendResponse({
+            message: "info recieved by popup"
+        });
     }
 );
 
 //Display current page URL
-// ui.displayUrlButton.addEventListener('click', () => {
+// ui.displayUrlButton.addEventListener("click", () => {
 //     popupFunction.displayCurrentURL();
 // })
 
 //Display links on page
-ui.displayLinksButton.addEventListener('click', () => {
-    popupFunction.writeResourcehints();
-})
+ui.displayOptimisedButton.addEventListener("click", () => {
+    popupFunction.writeOptimised();
+    console.log(pageInfo.linksArray)
+});
+
+//Display non optimised links on page
+ui.displayNonOptimisedButton.addEventListener("click", () => {
+    popupFunction.writeNonOptimised();
+});
 
 ui.nav.childNodes.forEach((e) => {
     e.addEventListener("click", popupFunction.tabClick);
-})
+});
