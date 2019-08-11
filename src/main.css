@@ -1,6 +1,6 @@
 #main {
   width: 630px;
-  height: 300px;
+  min-height: 80px;
 }
 
 .tab-item a {
@@ -21,4 +21,11 @@ ul {
 
 .tile-content small {
   display: block;
+}
+
+/* Spectre Overrides */
+
+.label {
+  background: #5755d9;
+  color: #ffffff;
 }

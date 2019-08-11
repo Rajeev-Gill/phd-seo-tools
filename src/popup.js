@@ -65,6 +65,16 @@ let popupFunction = {
         for (let key in pageInfo.links) {
             pageInfo.linksArray.push(pageInfo.links[key]);
         }
+        console.log(pageInfo.linksArray);
+        //Check links for optimised resources
+        pageInfo.linksArray.forEach((link) => {
+            if (link.relationship == "preload" || link.relationship == "prerender" || link.relationship == "prefetch" || link.relationship == "preconnect" || link.relationship == "dns-prefetch") {
+                pageInfo.optimisedResourcesFound = true;
+            }
+        });
+        if (pageInfo.optimisedResourcesFound == true) {
+            console.log("Optimised resources found");
+        }
     },
     writeNonOptimised: () => {
         ui.displayNonOptimised.innerHTML = "";
@@ -74,11 +84,11 @@ let popupFunction = {
 
         console.log(pageInfo.linksArray);
         pageInfo.linksArray.forEach((link) => {
-            if(link.relationship != "preload" && link.relationship != "prerender" && link.relationship != "prefetch" && link.relationship != "preconnect" && link.relationship != "dns-prefetch"){
+            if (link.relationship != "preload" && link.relationship != "prerender" && link.relationship != "prefetch" && link.relationship != "preconnect" && link.relationship != "dns-prefetch") {
                 //create and store li
                 let li = document.createElement("li");
                 //set li innerhtml to relationship + ":" + target
-                li.innerHTML = `<span class="label label-rounded">${link.relationship}</span>${link.target}`;
+                li.innerHTML = `<span class="label label-rounded">${link.relationship}</span><a href="${link.target}" target="_blank">${link.target}</a>`;
                 //append li to rscHintlist
                 list.appendChild(li);
             }
@@ -88,54 +98,59 @@ let popupFunction = {
         ui.displayNonOptimised.appendChild(list);
     },
     writeOptimised: () => {
-        //clear rsc hint div
-        ui.resourceHints.innerHTML = "";
-        //create and store ul element
-        let list = document.createElement("ul");
-        //set attribute of ul element to rscHintList
-        list.setAttribute("id", "rscHintList");
-        //loop through pageInfo.links array
-        for (let i = 0; i < pageInfo.linksArray.length; i++) {
-            //if iterated item .relationship == preload,prefetch,prerender,preconnect,DNS-Prefetch
-            if (pageInfo.linksArray[i].relationship == "preload") {
-                //create and store li
-                let li = document.createElement("li");
-                //set li innerhtml to relationship + ":" + target
-                li.innerHTML = `<span class="label label-rounded">${pageInfo.linksArray[i].relationship}</span>${pageInfo.linksArray[i].target}`;
-                //append li to rscHintlist
-                list.appendChild(li);
-            } else if (pageInfo.linksArray[i].relationship == "prerender") {
-                //create and store li
-                let li = document.createElement("li");
-                //set li innerhtml to relationship + ":" + target
-                 li.innerHTML = `<span class="label label-rounded">${pageInfo.linksArray[i].relationship}</span>${pageInfo.linksArray[i].target}`;
-                //append li to rscHintlist
-                list.appendChild(li);
-            } else if (pageInfo.linksArray[i].relationship == "prefetch") {
-                //create and store li
-                let li = document.createElement("li");
-                //set li innerhtml to relationship + ":" + target
-                 li.innerHTML = `<span class="label label-rounded">${pageInfo.linksArray[i].relationship}</span>${pageInfo.linksArray[i].target}`;
-                //append li to rscHintlist
-                list.appendChild(li);
-            } else if (pageInfo.linksArray[i].relationship == "preconnect") {
-                //create and store li
-                let li = document.createElement("li");
-                //set li innerhtml to relationship + ":" + target
-                 li.innerHTML = `<span class="label label-rounded">${pageInfo.linksArray[i].relationship}</span>${pageInfo.linksArray[i].target}`;
-                //append li to rscHintlist
-                list.appendChild(li);
-            } else if (pageInfo.linksArray[i].relationship == "dns-prefetch") {
-                //create and store li
-                let li = document.createElement("li");
-                //set li innerhtml to relationship + ":" + target
-                 li.innerHTML = `<span class="label label-rounded">${pageInfo.linksArray[i].relationship}</span>${pageInfo.linksArray[i].target}`;
-                //append li to rscHintlist
-                list.appendChild(li);
+        if (pageInfo.optimisedResourcesFound == true) {
+            //clear rsc hint div
+            ui.resourceHints.innerHTML = "";
+            //create and store ul element
+            let list = document.createElement("ul");
+            //set attribute of ul element to rscHintList
+            list.setAttribute("id", "rscHintList");
+            //loop through pageInfo.links array
+            for (let i = 0; i < pageInfo.linksArray.length; i++) {
+                //if iterated item .relationship == preload,prefetch,prerender,preconnect,DNS-Prefetch
+                if (pageInfo.linksArray[i].relationship == "preload") {
+                    //create and store li
+                    let li = document.createElement("li");
+                    //set li innerhtml to relationship + ":" + target
+                    li.innerHTML = `<span class="label label-rounded">${pageInfo.linksArray[i].relationship}</span>${pageInfo.linksArray[i].target}`;
+                    //append li to rscHintlist
+                    list.appendChild(li);
+                } else if (pageInfo.linksArray[i].relationship == "prerender") {
+                    //create and store li
+                    let li = document.createElement("li");
+                    //set li innerhtml to relationship + ":" + target
+                    li.innerHTML = `<span class="label label-rounded">${pageInfo.linksArray[i].relationship}</span>${pageInfo.linksArray[i].target}`;
+                    //append li to rscHintlist
+                    list.appendChild(li);
+                } else if (pageInfo.linksArray[i].relationship == "prefetch") {
+                    //create and store li
+                    let li = document.createElement("li");
+                    //set li innerhtml to relationship + ":" + target
+                    li.innerHTML = `<span class="label label-rounded">${pageInfo.linksArray[i].relationship}</span>${pageInfo.linksArray[i].target}`;
+                    //append li to rscHintlist
+                    list.appendChild(li);
+                } else if (pageInfo.linksArray[i].relationship == "preconnect") {
+                    //create and store li
+                    let li = document.createElement("li");
+                    //set li innerhtml to relationship + ":" + target
+                    li.innerHTML = `<span class="label label-rounded">${pageInfo.linksArray[i].relationship}</span>${pageInfo.linksArray[i].target}`;
+                    //append li to rscHintlist
+                    list.appendChild(li);
+                } else if (pageInfo.linksArray[i].relationship == "dns-prefetch") {
+                    //create and store li
+                    let li = document.createElement("li");
+                    //set li innerhtml to relationship + ":" + target
+                    li.innerHTML = `<span class="label label-rounded">${pageInfo.linksArray[i].relationship}</span>${pageInfo.linksArray[i].target}`;
+                    //append li to rscHintlist
+                    list.appendChild(li);
+                }
             }
+            //add list to DOM
+            ui.resourceHints.appendChild(list);
+        } else if (ui.resourceHints.innerText == ""){
+            //add message
+            ui.resourceHints.innerHTML += "<label>No optimised resources found</label>";
         }
-        //add list to DOM
-        ui.resourceHints.appendChild(list);
     },
     displayCurrentURL: () => {
         //clear displayUrl div
@@ -158,10 +173,9 @@ let popupFunction = {
 let pageInfo = {
     currentPageURL: "",
     links: {},
-    linksArray: []
+    linksArray: [],
+    optimisedResourcesFound: false
 }
-
-popupFunction.sendMessage();
 
 //Variable to store popup UI components
 let ui = {
@@ -180,7 +194,10 @@ let ui = {
     ]
 }
 
-//Listen for messages from contentScript using the following notation:
+//Execute content script after main popup script
+popupFunction.sendMessage();
+
+//Listen for replies from contentScript using the following notation:
 //request.url
 //request.links
 chrome.runtime.onMessage.addListener(
@@ -213,5 +230,5 @@ ui.displayNonOptimisedButton.addEventListener("click", () => {
 });
 
 ui.nav.childNodes.forEach((e) => {
-    e.addEventListener("click", popupFunction.tabClick);
+    e.addEventListener("click", popupFunction.tabClick;
 });
