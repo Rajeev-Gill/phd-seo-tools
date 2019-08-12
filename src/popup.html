@@ -59,18 +59,18 @@
             <div id="cdn-content" class="hidden">
               <div class="accordion">
                 <input type="checkbox" id="accordion-2" name="accordion-checkbox" hidden>
-                <label class="accordion-header" for="accordion-2">
+                <label class="accordion-header" for="accordion-2" id="displayCDNButton">
                   <i class="icon icon-arrow-right mr-2"></i>
                   Show CDN loaded resources
                 </label>
-                <div class="accordion-body">
+                <div class="accordion-body" id="displayCDN">
                   <ul>
-                    <li><span class="label label-rounded">preconnect</span class="label label-rounded">
-                      https://googletags.com</li>
+                    <li><span class="label label-rounded">cloudflare</span class="label label-rounded">
+                      https://cdn.cloudflare.com</li>
                   </ul>
                 </div>
               </div>
-              <div class="accordion">
+              <!-- <div class="accordion">
                 <input type="checkbox" id="accordion-6" name="accordion-checkbox" hidden>
                 <label class="accordion-header" for="accordion-6">
                   <i class="icon icon-arrow-right mr-6"></i>
@@ -82,7 +82,7 @@
                       https://googletags.com</li>
                   </ul>
                 </div>
-              </div>
+              </div> -->
             </div>
             <div id="images-content" class="hidden">
               <div class="accordion">
@@ -145,6 +145,7 @@
       </div>
     </div>
   </div>
+  <script src="cdnlist.js"></script>
   <script src="popup.js"></script>
 </body>
 

@@ -147,7 +147,7 @@ let popupFunction = {
             }
             //add list to DOM
             ui.resourceHints.appendChild(list);
-        } else if (ui.resourceHints.innerText == ""){
+        } else if (ui.resourceHints.innerText == "") {
             //add message
             ui.resourceHints.innerHTML += "<label>No optimised resources found</label>";
         }
@@ -166,6 +166,49 @@ let popupFunction = {
         } else {
             console.log("Error - Current page URL not parsed yet")
         }
+    },
+    displayCDNLoaded: () => {
+        try {
+            //for each link in array
+            pageInfo.linksArray.forEach((link) => {
+                //create a link object
+                let url = new URL(link.target);
+                //and push it into an array
+                pageInfo.CDNUrls.push(url);
+            });    
+        } catch (error) {
+            //if there is an error log it, dont break the program
+            console.log(
+                `Links length: ${pageInfo.linksArray.length},
+                CDNUrls length: ${pageInfo.CDNUrls.length},
+                CDNUrls: ${pageInfo.CDNUrls},
+                Error: ${error}`
+            );
+        }
+        
+        //Check if url origin contains cdn url
+        // pageInfo.CDNUrls.forEach((url) => {
+        //     debugger;
+        //     if (cdns.includes(url.origin)){
+        //         console.log(url);
+        //     }
+        // });
+
+        // for (let i = 0; pageInfo.CDNUrls.length; i ++) {
+        //     if(cdns.toString().includes(pageInfo.CDNUrls[i])){
+        //         console.log(pageInfo.CDNUrls[i]);
+        //     } else {
+        //         console.log("no cdn found");
+        //     }
+        // }
+
+        for (let i = 0; pageInfo.CDNUrls.length; i ++) {
+            if(pageInfo.CDNListString.includes(pageInfo.CDNUrls[i]))
+        }
+
+        // pageInfo.CDNUrls.forEach((url) => {
+        //     console.log(url.origin);
+        // });
     }
 }
 
@@ -174,7 +217,9 @@ let pageInfo = {
     currentPageURL: "",
     links: {},
     linksArray: [],
-    optimisedResourcesFound: false
+    optimisedResourcesFound: false,
+    CDNUrls: [],
+    CDNListString: cdns.toString()
 }
 
 //Variable to store popup UI components
@@ -186,6 +231,8 @@ let ui = {
     displayNonOptimised: document.getElementById("displayNonOptimised"),
     resourceHints: document.getElementById("resourceHints"),
     nav: document.getElementById("nav"),
+    displayCDNButton: document.getElementById("displayCDNButton"),
+    displayCDN: document.getElementById("displayCDN"),
     panels: [
         document.getElementById("resource-content"),
         document.getElementById("cdn-content"),
@@ -230,5 +277,9 @@ ui.displayNonOptimisedButton.addEventListener("click", () => {
 });
 
 ui.nav.childNodes.forEach((e) => {
-    e.addEventListener("click", popupFunction.tabClick;
+    e.addEventListener("click", popupFunction.tabClick);
+});
+
+ui.displayCDNButton.addEventListener("click", () => {
+    popupFunction.displayCDNLoaded();
 });
