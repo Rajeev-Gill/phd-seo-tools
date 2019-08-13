@@ -33,15 +33,15 @@ let popupFunction = {
                 popupFunction.hidePanels("resource-content");
                 ui.panels[0].className = "visible";
                 break;
-            case "CDN":
+            case "CDN Usage":
                 popupFunction.hidePanels("cdn-content");
                 ui.panels[1].className = "visible";
                 break;
-            case "Images":
+            case "Next-gen Images":
                 popupFunction.hidePanels("images-content");
                 ui.panels[2].className = "visible";
                 break;
-            case "Pagespeed":
+            case "Pagespeed Insights":
                 popupFunction.hidePanels("pagespeed-content");
                 ui.panels[3].className = "visible";
                 break;
@@ -149,7 +149,7 @@ let popupFunction = {
             ui.resourceHints.appendChild(list);
         } else if (ui.resourceHints.innerText == "") {
             //add message
-            ui.resourceHints.innerHTML += "<label>No optimised resources found</label>";
+            ui.resourceHints.innerHTML += "<ul><li>No optimised resources found</li></ul>";
         }
     },
     displayCurrentURL: () => {
@@ -167,7 +167,7 @@ let popupFunction = {
             console.log("Error - Current page URL not parsed yet")
         }
     },
-    displayCDNLoaded: () => {
+    writeCDNLoaded: () => {
         try {
             //for each link in array
             pageInfo.linksArray.forEach((link) => {
@@ -186,29 +186,30 @@ let popupFunction = {
             );
         }
         
-        //Check if url origin contains cdn url
-        // pageInfo.CDNUrls.forEach((url) => {
-        //     debugger;
-        //     if (cdns.includes(url.origin)){
-        //         console.log(url);
-        //     }
-        // });
+        //for each CDN
+        cdns.forEach((cdn) => {
+            //cycle through all resource url
+            pageInfo.CDNUrls.forEach((url) => {
+                //check if resource url contains cdn url substring
+                if(url.origin.includes(cdn[0])){
+                    pageInfo.CDNsFound = true;
+                    //console log the resource url and the cdn used
+                    console.log(`URL: ${url.href} CDN used: ${cdn[1]} URL substring detected: ${cdn[0]}`);
 
-        // for (let i = 0; pageInfo.CDNUrls.length; i ++) {
-        //     if(cdns.toString().includes(pageInfo.CDNUrls[i])){
-        //         console.log(pageInfo.CDNUrls[i]);
-        //     } else {
-        //         console.log("no cdn found");
-        //     }
-        // }
+                    //Write details of cdn loaded resources to DOM
+                    let CDNLoadedResource = document.createElement("li");
+                    //Build list item
+                    CDNLoadedResource.innerHTML = `<span class="label label-rounded">${cdn[1]}</span> ${url.href}`;
+                    //Add list item to DOM
+                    ui.displayCDN.appendChild(CDNLoadedResource);
+                }
+            });
+        });
 
-        for (let i = 0; pageInfo.CDNUrls.length; i ++) {
-            if(pageInfo.CDNListString.includes(pageInfo.CDNUrls[i]))
+        if(pageInfo.CDNsFound === false){
+            ui.displayCDN.innerHTML = `<li>No CDN loaded resources found</li>`;
         }
 
-        // pageInfo.CDNUrls.forEach((url) => {
-        //     console.log(url.origin);
-        // });
     }
 }
 
@@ -219,7 +220,8 @@ let pageInfo = {
     linksArray: [],
     optimisedResourcesFound: false,
     CDNUrls: [],
-    CDNListString: cdns.toString()
+    CDNListString: cdns.toString(),
+    CDNsFound: false
 }
 
 //Variable to store popup UI components
@@ -281,5 +283,5 @@ ui.nav.childNodes.forEach((e) => {
 });
 
 ui.displayCDNButton.addEventListener("click", () => {
-    popupFunction.displayCDNLoaded();
+    popupFunction.writeCDNLoaded();
 });

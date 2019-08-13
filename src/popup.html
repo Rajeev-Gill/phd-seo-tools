@@ -21,13 +21,13 @@
                 <a href="#">Resource Prioritisation</a>
               </li>
               <li class="tab-item cdn">
-                <a href="#">CDN</a>
+                <a href="#">CDN Usage</a>
               </li>
               <li class="tab-item images">
-                <a href="#">Images</a>
+                <a href="#">Next-gen Images</a>
               </li>
               <li class="tab-item pagespeed">
-                <a href="#">Pagespeed</a>
+                <a href="#">Pagespeed Insights</a>
               </li>
             </ul>
           </div>
@@ -52,7 +52,7 @@
                   Show non-optimised resources
                 </label>
                 <div class="accordion-body" id="displayNonOptimised">
-                  
+
                 </div>
               </div>
             </div>
@@ -63,26 +63,12 @@
                   <i class="icon icon-arrow-right mr-2"></i>
                   Show CDN loaded resources
                 </label>
-                <div class="accordion-body" id="displayCDN">
-                  <ul>
-                    <li><span class="label label-rounded">cloudflare</span class="label label-rounded">
-                      https://cdn.cloudflare.com</li>
+                <div class="accordion-body">
+                  <ul id="displayCDN">
+                    <!-- Content will be programmatically injected with javascript -->
                   </ul>
                 </div>
               </div>
-              <!-- <div class="accordion">
-                <input type="checkbox" id="accordion-6" name="accordion-checkbox" hidden>
-                <label class="accordion-header" for="accordion-6">
-                  <i class="icon icon-arrow-right mr-6"></i>
-                  Show non-CDN loaded resources
-                </label>
-                <div class="accordion-body">
-                  <ul>
-                    <li><span class="label label-rounded">preconnect</span class="label label-rounded">
-                      https://googletags.com</li>
-                  </ul>
-                </div>
-              </div> -->
             </div>
             <div id="images-content" class="hidden">
               <div class="accordion">
