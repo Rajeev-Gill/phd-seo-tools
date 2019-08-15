@@ -175,7 +175,7 @@ let popupFunction = {
                 let url = new URL(link.target);
                 //and push it into an array
                 pageInfo.CDNUrls.push(url);
-            });    
+            });
         } catch (error) {
             //if there is an error log it, dont break the program
             console.log(
@@ -185,13 +185,13 @@ let popupFunction = {
                 Error: ${error}`
             );
         }
-        
+
         //for each CDN
         cdns.forEach((cdn) => {
             //cycle through all resource url
             pageInfo.CDNUrls.forEach((url) => {
                 //check if resource url contains cdn url substring
-                if(url.origin.includes(cdn[0])){
+                if (url.origin.includes(cdn[0])) {
                     pageInfo.CDNsFound = true;
                     //console log the resource url and the cdn used
                     console.log(`URL: ${url.href} CDN used: ${cdn[1]} URL substring detected: ${cdn[0]}`);
@@ -206,9 +206,38 @@ let popupFunction = {
             });
         });
 
-        if(pageInfo.CDNsFound === false){
+        if (pageInfo.CDNsFound === false) {
             ui.displayCDN.innerHTML = `<li>No CDN loaded resources found</li>`;
         }
+
+    },
+    getImageTypes: () => {
+        //create constructor function for images
+        function Image(currentSrc, outerHTML, srcSet, typeInfo) {
+            this.currentSrc = currentSrc;
+            this.html = outerHTML;
+            this.sources = srcSet;
+            this.typeInfo = filetypeInfo;
+        }
+        //Loop through images and extract image type info
+        pageInfo.images.forEach((image) => {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', image.currentSrc);
+            xhr.responseType = 'arraybuffer';
+
+            xhr.onload = () => {
+                //fileType(new Uint8Array(this.response));
+                let imgTypeInfo = fileType(new Uint8Array(xhr.response));
+                //=> {ext: 'png', mime: 'image/png'}
+            };
+            xhr.send();
+
+            //create new image with type info and send it to pageInfo
+            pageInfo.processedImages.push(new Image(image.currentSrc, image.outerHTML, image.srcset, imgTypeInfo));
+
+        });
+    },
+    sortImages: () => {
 
     }
 }
@@ -221,7 +250,10 @@ let pageInfo = {
     optimisedResourcesFound: false,
     CDNUrls: [],
     CDNListString: cdns.toString(),
-    CDNsFound: false
+    CDNsFound: false,
+    processedImages: [],
+    optimisedImages: [],
+    nonOptimisedImages: []
 }
 
 //Variable to store popup UI components
@@ -235,6 +267,10 @@ let ui = {
     nav: document.getElementById("nav"),
     displayCDNButton: document.getElementById("displayCDNButton"),
     displayCDN: document.getElementById("displayCDN"),
+    displayOptimisedImagesButton: document.getElementById("displayOptimisedImagesButton"),
+    displayOptimisedImages: document.getElementById("displayOptimisedImages"),
+    displayNonOptimisedImagesButton: document.getElementById("displayNonOptimisedImagesButton"),
+    displayNonOptimisedImages: document.getElementById("displayNonOptimisedImages"),
     panels: [
         document.getElementById("resource-content"),
         document.getElementById("cdn-content"),
@@ -254,8 +290,13 @@ chrome.runtime.onMessage.addListener(
         console.log(request)
         pageInfo.currentPageURL = request.url;
         pageInfo.links = request.links;
+        pageInfo.images = request.images;
+
         //Convert links from obj to arr
         popupFunction.logLinks();
+
+        //Sort images into two arrays
+        popupFunction.getImageTypes();
         sendResponse({
             message: "info recieved by popup"
         });

@@ -1,4 +1,66 @@
-const fileType = require("file-type");
+
+   
+        
+
+        const filereader = new FileReader()
+
+        
+        const uint = new Uint8Array(evt.target.result)
+        let bytes = []
+        uint.forEach((byte) => {
+            bytes.push(byte.toString(16))
+        })
+        const hex = bytes.join('').toUpperCase()
+
+        uploads.push({
+            filename: file.name,
+            filetype: file.type ? file.type : 'Unknown/Extension missing',
+            binaryFileType: getMimetype(hex),
+            hex: hex
+        })
+        render()
+    
+
+
+
+const blob = file.slice(0, 4);
+filereader.readAsArrayBuffer(blob);
+
+
+const render = () => {
+const container = document.getElementById('files')
+
+const uploadedFiles = uploads.map((file) => {
+    return `<div>
+            <strong>${file.filename}</strong><br>
+            Filetype from file object: ${file.filetype}<br>
+            Filetype from binary: ${file.binaryFileType}<br>
+            Hex: <em>${file.hex}</em>
+            </div>`
+})
+
+container.innerHTML = uploadedFiles.join('')
+}
+
+const getMimetype = (signature) => {
+switch (signature) {
+    case '89504E47':
+        return 'image/png'
+    case '47494638':
+        return 'image/gif'
+    case '25504446':
+        return 'application/pdf'
+    case 'FFD8FFDB':
+    case 'FFD8FFE0':
+    case 'FFD8FFE1':
+        return 'image/jpeg'
+    case '504B0304':
+        return 'application/zip'
+    default:
+        return 'Unknown filetype'
+}
+}
+
 
 //Getting file/blob from image via URL
 
@@ -15,31 +77,20 @@ const googleWEBP = "https://www.gstatic.com/webp/gallery/1.webp";
 //New async function so I can use fetch without promises
 async function run() {
     //Fetch image from url
-    var imgResponse = await fetch(webpURL);
+    let imgResponse = await fetch(webpURL);
 
     //turn XMLhttp response into blob (Binary Large Object)
     imgBlob = await imgResponse.blob();
 
     //Log the body of the response (readableStream)
     console.log("Blob from fetched image:", imgBlob);
-    //console.log(await imgBlob.text());
+    console.log(imgBlob.text());
 
     //read blob using filereader https://developer.mozilla.org/en-US/docs/Web/API/FileReader
 
     //create new fileReader
-    var reader = await new FileReader();
+    let reader = new FileReader();
+
+
 }
 run();
-
-const xhr = new XMLHttpRequest();
-xhr.open('GET', webpURL);
-xhr.responseType = 'arraybuffer';
-
-xhr.onload = () => {
-    //fileType(new Uint8Array(this.response));
-    let filez = fileType(new Uint8Array(xhr.response));
-    console.log(filez);
-	//=> {ext: 'png', mime: 'image/png'}
-};
-
-xhr.send();

@@ -73,44 +73,49 @@
             <div id="images-content" class="hidden">
               <div class="accordion">
                 <input type="checkbox" id="accordion-3" name="accordion-checkbox" hidden>
-                <label class="accordion-header" for="accordion-3">
+                <label class="accordion-header" for="accordion-3" id="displayOptimisedImagesButton">
                   <i class="icon icon-arrow-right mr-3"></i>
                   Show next-generation images
                 </label>
                 <div class="accordion-body">
-                  <div class="tile tile-centered">
-                    <div class="tile-icon">
-                      <div class="example-tile-icon">
-                        <img src="https://via.placeholder.com/140x100">
+                  <ul id="displayOptimisedImages">
+                    <!-- Content will be programmatically injected with javascript -->
+                    <div class="tile tile-centered">
+                      <div class="tile-icon">
+                        <div class="example-tile-icon">
+                          <img src="https://via.placeholder.com/140x100">
+                        </div>
+                      </div>
+                      <div class="tile-content">
+                        <div class="tile-title">Golf.WEBP</div>
+                        <small class="tile-subtitle">Size: 14MB</small>
+                        <small class="tile-subtitle">Source: /img/Golf.WEBP</small>
                       </div>
                     </div>
-                    <div class="tile-content">
-                      <div class="tile-title">Golf.WEBP</div>
-                      <small class="tile-subtitle">Size: 14MB</small>
-                      <small class="tile-subtitle">Source: /img/Golf.WEBP</small>
-                    </div>
-                  </div>
                 </div>
+                </ul>
               </div>
               <div class="accordion">
                 <input type="checkbox" id="accordion-7" name="accordion-checkbox" hidden>
-                <label class="accordion-header" for="accordion-7">
+                <label class="accordion-header" for="accordion-7" id="displayNonOptimisedImagesButton">
                   <i class="icon icon-arrow-right mr-7"></i>
                   Show standard images
                 </label>
                 <div class="accordion-body">
-                  <div class="tile tile-centered">
-                    <div class="tile-icon">
-                      <div class="example-tile-icon">
-                        <img src="https://via.placeholder.com/140x100">
+                  <ul id="displayNonOptimisedImages">
+                    <div class="tile tile-centered">
+                      <div class="tile-icon">
+                        <div class="example-tile-icon">
+                          <img src="https://via.placeholder.com/140x100">
+                        </div>
+                      </div>
+                      <div class="tile-content">
+                        <div class="tile-title">Polo.gif</div>
+                        <small class="tile-subtitle">Size: 14MB</small>
+                        <small class="tile-subtitle">Source: /img/Polo.gif</small>
                       </div>
                     </div>
-                    <div class="tile-content">
-                      <div class="tile-title">Polo.gif</div>
-                      <small class="tile-subtitle">Size: 14MB</small>
-                      <small class="tile-subtitle">Source: /img/Polo.gif</small>
-                    </div>
-                  </div>
+                  </ul>
                 </div>
               </div>
             </div>
