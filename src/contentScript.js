@@ -1,4 +1,3 @@
-
 console.log("Programmatically injected contentScript");
 
 if (typeof pageInfo != "object") {

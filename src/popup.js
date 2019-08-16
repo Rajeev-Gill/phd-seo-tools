@@ -1,3 +1,4 @@
+const fileType = require("file-type");
 //Notes
 //Next steps
 //Merge to master
@@ -217,24 +218,29 @@ let popupFunction = {
             this.currentSrc = currentSrc;
             this.html = outerHTML;
             this.sources = srcSet;
-            this.typeInfo = filetypeInfo;
+            this.typeInfo = typeInfo;
         }
         //Loop through images and extract image type info
         pageInfo.images.forEach((image) => {
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', image.currentSrc);
-            xhr.responseType = 'arraybuffer';
-
-            xhr.onload = () => {
-                //fileType(new Uint8Array(this.response));
-                let imgTypeInfo = fileType(new Uint8Array(xhr.response));
-                //=> {ext: 'png', mime: 'image/png'}
-            };
-            xhr.send();
-
-            //create new image with type info and send it to pageInfo
-            pageInfo.processedImages.push(new Image(image.currentSrc, image.outerHTML, image.srcset, imgTypeInfo));
-
+            var imgTypeInfo;
+            try {
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', "https://cors-anywhere.herokuapp.com/" + image.currentSrc);
+                xhr.responseType = 'arraybuffer';
+                
+                xhr.onload = () => {
+                    var arrayBuffer = xhr.response;
+                    if(arrayBuffer) {
+                        var byteArray = new Uint8Array(arrayBuffer);
+                        imgTypeInfo = fileType(byteArray);
+                    }
+                    pageInfo.processedImages.push(new Image(image.currentSrc, image.html, image.sources, imgTypeInfo));
+                    console.log(pageInfo);
+                };
+                xhr.send();
+            } catch (error) {
+                console.log(error)
+            }
         });
     },
     sortImages: () => {
@@ -302,11 +308,6 @@ chrome.runtime.onMessage.addListener(
         });
     }
 );
-
-//Display current page URL
-// ui.displayUrlButton.addEventListener("click", () => {
-//     popupFunction.displayCurrentURL();
-// })
 
 //Display links on page
 ui.displayOptimisedButton.addEventListener("click", () => {
