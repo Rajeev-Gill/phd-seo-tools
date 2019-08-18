@@ -212,6 +212,9 @@ let popupFunction = {
         }
 
     },
+    sortImages: () => {
+
+    },
     getImageTypes: () => {
         //create constructor function for images
         function Image(currentSrc, outerHTML, srcSet, typeInfo) {
@@ -243,9 +246,6 @@ let popupFunction = {
             }
         });
     },
-    sortImages: () => {
-
-    }
 }
 
 //Variable to store recieved messages
@@ -297,6 +297,7 @@ chrome.runtime.onMessage.addListener(
         pageInfo.currentPageURL = request.url;
         pageInfo.links = request.links;
         pageInfo.images = request.images;
+        console.log(`pageinfo.images: ${pageInfo.images}`);
 
         //Convert links from obj to arr
         popupFunction.logLinks();
