@@ -37,8 +37,10 @@ if (typeof pageInfo != "object") {
     //For each image
     images.forEach((image) => {
         //Create a new image object and push it into array
-        pageInfo.images.push(new Image(image.currentSrc, image.outerHTML, image.srcset))
+        pageInfo.images.push(new Image(image.currentSrc, image.outerHTML, image.srcset ? image.srcset : "No srcset found"));
     });
+
+
 
     //Send a message containing the pageInfo properties 
     chrome.runtime.sendMessage({

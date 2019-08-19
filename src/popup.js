@@ -230,10 +230,10 @@ let popupFunction = {
                 const xhr = new XMLHttpRequest();
                 xhr.open('GET', "https://cors-anywhere.herokuapp.com/" + image.currentSrc);
                 xhr.responseType = 'arraybuffer';
-                
+
                 xhr.onload = () => {
                     var arrayBuffer = xhr.response;
-                    if(arrayBuffer) {
+                    if (arrayBuffer) {
                         var byteArray = new Uint8Array(arrayBuffer);
                         imgTypeInfo = fileType(byteArray);
                     }
@@ -246,6 +246,38 @@ let popupFunction = {
             }
         });
     },
+    writeOptimisedImages: () => {
+        //Clear dom first
+        ui.displayOptimisedImages.innerHTML = "";
+        //for each processed image
+        pageInfo.processedImages.forEach((image) => {
+            //if the image is next gen
+            if (image.typeInfo.ext === "webp") {
+                //create a list item
+                let li = document.createElement("li");
+
+                //Set list item inner html to image info
+                li.innerHTML = `
+            <div class="tile tile-centered">
+                <div class="tile-icon">
+                    <div class="example-tile-icon">
+                        <img src="${image.currentSrc}">
+                    </div>
+                </div>
+                <div class="tile-content">
+                    <div class="tile-title">${image.currentSrc}</div>
+                        <small class="tile-subtitle">Mime Type: ${image.typeInfo.mime}</small>
+                        <small class="tile-subtitle">HTML: ${image.html}</small>
+                    </div>
+            </div>
+            `;
+
+                //attach new list item to dom
+                ui.displayOptimisedImages.appendChild(li);
+            }
+
+        });
+    }
 }
 
 //Variable to store recieved messages
@@ -297,7 +329,7 @@ chrome.runtime.onMessage.addListener(
         pageInfo.currentPageURL = request.url;
         pageInfo.links = request.links;
         pageInfo.images = request.images;
-        console.log(`pageinfo.images: ${pageInfo.images}`);
+        console.log("PageInfo: " + pageInfo);
 
         //Convert links from obj to arr
         popupFunction.logLinks();
@@ -321,10 +353,16 @@ ui.displayNonOptimisedButton.addEventListener("click", () => {
     popupFunction.writeNonOptimised();
 });
 
+//Add tabclick function to each tab
 ui.nav.childNodes.forEach((e) => {
     e.addEventListener("click", popupFunction.tabClick);
 });
 
+//Display CDN links
 ui.displayCDNButton.addEventListener("click", () => {
     popupFunction.writeCDNLoaded();
+});
+
+ui.displayOptimisedImagesButton.addEventListener("click", () => {
+    popupFunction.writeOptimisedImages();
 });
