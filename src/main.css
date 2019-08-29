@@ -29,6 +29,11 @@ ul {
   max-width: 140px;
 }
 
+#images-content small {
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
 /* Spectre Overrides */
 
 .label {

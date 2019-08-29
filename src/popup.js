@@ -265,8 +265,8 @@ let popupFunction = {
                     </div>
                 </div>
                 <div class="tile-content">
-                    <div class="tile-title">${image.typeInfo.mime}</div>
-                        <small class="tile-subtitle">Mime Type: ${image.currentSrc}</small>
+                    <div class="tile-title">Mime Type: ${image.typeInfo.mime}</div>
+                        <small class="tile-subtitle">Image source URL: <a href="${image.currentSrc}" target="_blank">${image.currentSrc}</a></small>
                     </div>
             </div>
             `;
@@ -280,7 +280,6 @@ let popupFunction = {
 
         });
 
-        debugger;
         if (pageInfo.optimisedImagesFound === false) {
             let li = document.createElement("li");
             li.innerHTML = "No optimised images found, currently checking for .webp";
@@ -306,8 +305,8 @@ let popupFunction = {
                      </div>
                  </div>
                  <div class="tile-content">
-                     <div class="tile-title">${image.typeInfo.mime}</div>
-                         <small class="tile-subtitle">Mime Type: ${image.currentSrc}</small>
+                     <div class="tile-title">Mime Type: ${image.typeInfo.mime}</div>
+                         <small class="tile-subtitle">Image source URL: <a href="${image.currentSrc}" target="_blank">${image.currentSrc}</a></small>
                      </div>
              </div>
              `;
