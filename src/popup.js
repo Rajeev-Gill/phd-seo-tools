@@ -212,9 +212,6 @@ let popupFunction = {
         }
 
     },
-    sortImages: () => {
-
-    },
     getImageTypes: () => {
         //create constructor function for images
         function Image(currentSrc, outerHTML, srcSet, typeInfo) {
@@ -251,13 +248,16 @@ let popupFunction = {
         ui.displayOptimisedImages.innerHTML = "";
         //for each processed image
         pageInfo.processedImages.forEach((image) => {
-            //if the image is next gen
-            if (image.typeInfo.ext === "webp") {
-                //create a list item
-                let li = document.createElement("li");
+            try {
+                //if the image is next gen
+                if (image.typeInfo.ext == "webp") {
+                    pageInfo.optimisedImagesFound = true;
 
-                //Set list item inner html to image info
-                li.innerHTML = `
+                    //create a list item
+                    let li = document.createElement("li");
+
+                    //Set list item inner html to image info
+                    li.innerHTML = `
             <div class="tile tile-centered">
                 <div class="tile-icon">
                     <div class="example-tile-icon">
@@ -265,15 +265,55 @@ let popupFunction = {
                     </div>
                 </div>
                 <div class="tile-content">
-                    <div class="tile-title">${image.currentSrc}</div>
-                        <small class="tile-subtitle">Mime Type: ${image.typeInfo.mime}</small>
-                        <small class="tile-subtitle">HTML: ${image.html}</small>
+                    <div class="tile-title">${image.typeInfo.mime}</div>
+                        <small class="tile-subtitle">Mime Type: ${image.currentSrc}</small>
                     </div>
             </div>
             `;
 
+                    //attach new list item to dom
+                    ui.displayOptimisedImages.appendChild(li);
+                }
+            } catch(e) {
+                console.log(e);
+            }
+
+        });
+
+        debugger;
+        if (pageInfo.optimisedImagesFound === false) {
+            let li = document.createElement("li");
+            li.innerHTML = "No optimised images found, currently checking for .webp";
+            ui.displayOptimisedImages.appendChild(li);
+        }
+    },
+    writeNonOptimisedImages: () => {
+        //Clear dom first
+        ui.displayNonOptimisedImages.innerHTML = "";
+        //for each processed image
+        pageInfo.processedImages.forEach((image) => {
+            //if the image is next gen
+            if (image.typeInfo.ext != "webp") {
+                //create a list item
+                let li = document.createElement("li");
+
+                //Set list item inner html to image info
+                li.innerHTML = `
+             <div class="tile tile-centered">
+                 <div class="tile-icon">
+                     <div class="example-tile-icon">
+                         <img src="${image.currentSrc}">
+                     </div>
+                 </div>
+                 <div class="tile-content">
+                     <div class="tile-title">${image.typeInfo.mime}</div>
+                         <small class="tile-subtitle">Mime Type: ${image.currentSrc}</small>
+                     </div>
+             </div>
+             `;
+
                 //attach new list item to dom
-                ui.displayOptimisedImages.appendChild(li);
+                ui.displayNonOptimisedImages.appendChild(li);
             }
 
         });
@@ -290,6 +330,7 @@ let pageInfo = {
     CDNListString: cdns.toString(),
     CDNsFound: false,
     processedImages: [],
+    optimisedImagesFound: false,
     optimisedImages: [],
     nonOptimisedImages: []
 }
@@ -365,4 +406,8 @@ ui.displayCDNButton.addEventListener("click", () => {
 
 ui.displayOptimisedImagesButton.addEventListener("click", () => {
     popupFunction.writeOptimisedImages();
+});
+
+ui.displayNonOptimisedImagesButton.addEventListener("click", () => {
+    popupFunction.writeNonOptimisedImages();
 });

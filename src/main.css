@@ -23,6 +23,12 @@ ul {
   display: block;
 }
 
+/* Next Gen Images */
+
+#images-content img {
+  max-width: 140px;
+}
+
 /* Spectre Overrides */
 
 .label {
